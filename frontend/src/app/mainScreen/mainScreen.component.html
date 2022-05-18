@@ -1,0 +1,12 @@
+<div>
+    <p *ngIf="status">Status here: {{status}}</p>
+</div>
+<div *ngIf="stream">
+     <webcam [trigger]="$trigger" (imageCapture)="snapshot($event)" [imageQuality]="1"></webcam>
+     <button (click)="captureImage()" >{{btnLabel}}</button>
+</div>
+
+<div *ngIf="previewImage">
+    <img [src]="previewImage" height="250" width="250">
+    <button (click)="proceed()">Proceed</button>
+</div>
