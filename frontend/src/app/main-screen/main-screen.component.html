@@ -1,14 +1,18 @@
 <h1>MAIN SCREEN COMPONENT</h1>
-<div>
-    <p *ngIf="status">Status here: {{status}}</p>
-</div>
-<div *ngIf="stream">
-     <webcam [trigger]="$trigger" (imageCapture)="snapshot($event)" [imageQuality]="1"></webcam>
-     <button (click)="captureImage()" >{{btnLabel}}</button>
-</div>
-
-<div *ngIf="previewImage">
-    <img [src]="previewImage" height="250" width="250">
-    <button (click)="proceed()">Proceed</button>
-</div>
-<h2>Nothing of above work :(</h2>
+<div style="text-align:center">
+      
+        <div>
+          <webcam [height]="500" [width]="500" [trigger]="triggerObservable" *ngIf="showWebcam"
+                  [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                  [videoOptions]="videoOptions"
+                  [imageQuality]="1"
+                  (initError)="handleInitError($event)"
+          ></webcam>
+          <br/>
+          <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+          <button class="actionBtn" (click)="toggleWebcam();">Toggle Webcam</button>
+          <br/>
+          <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+          <br/>
+        </div>
+      </div>
