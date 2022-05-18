@@ -4,8 +4,8 @@ import { Observable, Subject } from 'rxjs'
 
 @Component({
   selector: 'app-root',
-  templateUrl: './mainScreen.component.html',
-  styleUrls: ['./mainScreen.component.scss']
+  templateUrl: './main-screen.component.html',
+  styleUrls: ['./main-screen.component.css']
 })
 export class MainScreenComponent {
   stream: any = null;

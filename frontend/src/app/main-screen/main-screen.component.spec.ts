@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { MainScreenComponent } from './mainScreen.component';
+import { MainScreenComponent } from './main-screen.component';
 
 describe('MainScreenComponent', () => {
   beforeEach(async () => {
