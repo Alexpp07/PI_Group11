@@ -1,8 +1,37 @@
-<h1>Angular Router App</h1>
-<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
-<nav>
-  <ul>
-    <li><a routerLink="main-screen" routerLinkActive="active">Main Screen</a></li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-light" style="background: linear-gradient(to bottom, #1A374D, #406882); color:aliceblue">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">InMotion</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" style="color:#FFFFFF">
+          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Main Screen</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Motion detection</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Color tracking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Gaze tracking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Sequencer</a>
+        </li>
+      </ul>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="/assets/gear.svg" alt="settings" class = "settings" width="32" height="32">
+          </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>

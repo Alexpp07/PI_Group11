@@ -13,7 +13,7 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
   imports: [
     WebcamModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
