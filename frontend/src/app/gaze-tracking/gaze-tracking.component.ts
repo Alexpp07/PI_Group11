@@ -61,6 +61,7 @@ export class GazeTrackingComponent implements OnInit {
   public resetcamera() {
 
     this.showWebcam = this.showWebcam;
+    //camera.position.set(0,0,500);
 
 }
 }
