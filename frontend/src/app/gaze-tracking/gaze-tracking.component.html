@@ -1,8 +1,8 @@
-<h1>MAIN SCREEN COMPONENT</h1>
+<h1>GAZE TRACKING COMPONENT</h1>
 <div style="text-align:center">
       
         <div>
-          <webcam [height]="700" [width]="1500" [trigger]="triggerObservable" *ngIf="showWebcam"
+          <webcam [height]="700" [width]="1500"  [trigger]="triggerObservable" *ngIf="showWebcam"
                   [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
                   [videoOptions]="videoOptions"
                   [imageQuality]="1"
@@ -15,6 +15,7 @@
             <option value="three">12</option>
             <option value="three">16</option>
           </select>
+          <button style="width: 40%;" class="actionBtn" (click)="resetcamera();">Calibrate</button>
           <br/>
           <br/>
         </div>
