@@ -34,4 +34,25 @@
     </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="main-container">
+  <div class="row d-md-flex">
+    <div class="col">
+      <div class="classWithPad">
+        <webcam [width]="1280" [height]="768"></webcam>
+      </div>
+    </div>
+    <div class="col">
+      <div class="classWithPad">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+<footer class="bg-light text-center text-lg-start fixed-bottom">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2022 Copyright:
+    <a class="text-dark" href="https://mdbootstrap.com/">InMotion</a> <!-- needs link to our website -->
+  </div>
+</footer>

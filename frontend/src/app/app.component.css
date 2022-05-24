@@ -4,3 +4,8 @@
 .settings{
     filter: invert(100%)
 }
+.classWithPad { margin:10px; padding:10px; }
+
+.main-container {
+    background-color: rgb(230, 237, 247);
+}

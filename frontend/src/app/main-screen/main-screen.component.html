@@ -1,21 +1,8 @@
-<h1>MAIN SCREEN COMPONENT</h1>
-<div style="text-align:center">
-      
-        <div>
-          <webcam [height]="700" [width]="1500" [trigger]="triggerObservable" *ngIf="showWebcam"
-                  [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                  [videoOptions]="videoOptions"
-                  [imageQuality]="1"
-                  (initError)="handleInitError($event)"
-          ></webcam>
-          <br/>
-          <select name="pixels" id="#">
-            <option selected="selected" value="one">4</option>
-            <option value="two">8</option>
-            <option value="three">12</option>
-            <option value="four">16</option>
-          </select>
-          <br/>
-          <br/>
-        </div>
-      </div>
+<label for="pixels">Number of rectangles:</label><br>
+
+<select name="pixels" id="#">
+  <option selected="selected" value="one">4</option>
+  <option value="two">8</option>
+  <option value="three">12</option>
+  <option value="four">16</option>
+</select>
