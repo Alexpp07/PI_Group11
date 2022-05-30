@@ -14,9 +14,10 @@ export class AppComponent implements OnInit{
   }
   ngOnInit() {
     this.http.get<any>('http://127.0.0.1:5000/movement_detection').subscribe(data => {
-      let imageBinary = data.data; //image binary data response from api
-      let imageBase64String= btoa(imageBinary);
-      this.imageUrl = 'data:image/jpeg;base64,' + imageBase64String;
+      let imageBase64String = data.data;
+      imageBase64String = imageBase64String.slice(2);
+      imageBase64String = imageBase64String.slice(0, -1);
+      this.imageUrl = 'data:image/png;base64,' + imageBase64String;
     console.log(this.imageUrl)})
   }
 }
