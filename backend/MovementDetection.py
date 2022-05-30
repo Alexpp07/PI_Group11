@@ -32,4 +32,15 @@ def MovementDetection(imageA, imageB):
 
         # cv2.rectangle(image, (x, y), (x+w, y+h), (0,255,0), 2)
     # show the images
-    return imageA  # np.hstack([image, output])
+    if (positions.get("hor") != None and positions.get("ver") != None):
+        x = int(positions.get("hor"))
+        y = int(positions.get("ver"))
+        circulo_centro = cv2.circle(imageA, (x, y), radius=5, color=(255, 0, 0), thickness=-1)
+        return circulo_centro
+    else:
+        return imageA
+
+
+
+
+
