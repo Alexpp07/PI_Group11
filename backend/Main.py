@@ -10,8 +10,10 @@ import base64
 
 from flask import Flask, request
 from flask_restful import Api, Resource
+from flask_cors import CORS
 
 app = Flask(__name__)
+api = CORS(app)
 api = Api(app)
 
 

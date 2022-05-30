@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { interval, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppComponent implements OnInit{
   isImageSaved: boolean = false;
   imageUrl: string = "";
+  mySubscription: Subscription
   constructor(private http: HttpClient) {
+    this.mySubscription= interval(1).subscribe((x =>{
+      this.ngOnInit();
+  }));
   }
   ngOnInit() {
     this.http.get<any>('http://127.0.0.1:5000/movement_detection').subscribe(data => {
@@ -20,5 +25,9 @@ export class AppComponent implements OnInit{
       this.imageUrl = 'data:image/png;base64,' + imageBase64String;
     console.log(this.imageUrl)})
   }
+
+  
+
 }
+
 
