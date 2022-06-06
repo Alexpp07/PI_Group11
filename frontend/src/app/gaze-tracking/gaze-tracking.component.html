@@ -1,22 +1,14 @@
-<h1>GAZE TRACKING COMPONENT</h1>
-<div style="text-align:center">
-      
-        <div>
-          <webcam [height]="700" [width]="1500"  [trigger]="triggerObservable" *ngIf="showWebcam"
-                  [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                  [videoOptions]="videoOptions"
-                  [imageQuality]="1"
-                  (initError)="handleInitError($event)"
-          ></webcam>
-          <br/>
-          <select name="pixels" id="#">
-            <option selected="selected" value="one">4</option>
-            <option value="two">8</option>
-            <option value="three">12</option>
-            <option value="four">16</option>
-          </select>
-          <button style="width: 40%;" class="actionBtn" (click)="resetcamera();">Calibrate</button>
-          <br/>
-          <br/>
-        </div>
+<div class="main-container">
+  <div class="row d-md-flex">
+    <div class="col">
+      <div class="classWithPad">
+        <img src={{imageUrl}} width="1280" height="768"/>
       </div>
+    </div>
+    <div class="col">
+      <div class="classWithPad">
+        <!-- space for buttons etc-->
+      </div>
+  </div>
+  </div>
+</div>

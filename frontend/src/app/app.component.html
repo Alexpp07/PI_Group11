@@ -6,14 +6,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item" style="color:#FFFFFF">
+        <!--<li class="nav-item" style="color:#FFFFFF">
           <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Main Screen</a>
+        </li>--> <!-- we dont need that imo-->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="motion-detection" routerLinkActive="active">Motion detection</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Motion detection</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="main-screen" routerLinkActive="active">Color tracking</a>
+          <a class="nav-link active" aria-current="page" routerLink="color-detection" routerLinkActive="active">Color tracking</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="gaze-tracking" routerLinkActive="active">Gaze tracking</a>
@@ -35,20 +35,7 @@
   </div>
 </nav>
 <div class="container-fluid ">
-  <div class="main-container">
-  <div class="row d-md-flex">
-    <div class="col">
-      <div class="classWithPad">
-        <img src={{imageUrl}} width="1280" height="768"/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="classWithPad">
-        <router-outlet></router-outlet>
-      </div>
-  </div>
-  </div>
-</div>
+  <router-outlet></router-outlet>
 </div>
 <footer class="bg-light text-center text-lg-start fixed-bottom">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">

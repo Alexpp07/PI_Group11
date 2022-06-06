@@ -1,9 +1,9 @@
 opencv-python
-scikit-image
+scikit-images
 numpy
 imutils
-pybase64
-requires.io
-os_sys
+base64
+io
+os
 flask
 flask_restful

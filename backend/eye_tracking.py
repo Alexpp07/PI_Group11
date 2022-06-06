@@ -36,8 +36,8 @@ def EyeTracking(frame):
 
         hor = frame.shape[1] * horizontalR
         ver = frame.shape[0] * verticalR
-        return frame
-    return frame
+        return frame, (hor, ver)
+    return frame, (None, None)
 
 
 

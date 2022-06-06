@@ -32,4 +32,9 @@ def MovementDetection(imageA, imageB):
 
         # cv2.rectangle(image, (x, y), (x+w, y+h), (0,255,0), 2)
     # show the images
-    return imageA  # np.hstack([image, output])
+    return imageA, (positions["hor"], positions["ver"])
+
+
+
+
+
