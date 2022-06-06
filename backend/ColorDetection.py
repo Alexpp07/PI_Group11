@@ -29,7 +29,7 @@ def ColorDetection(image,r,b,g,threshold):
     	cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
-    positions = {}
+    positions = {"hor":None, "ver":None}
     maxArea = 6000
 
     for c in cnts:
@@ -41,4 +41,4 @@ def ColorDetection(image,r,b,g,threshold):
 
         #cv2.rectangle(image, (x, y), (x+w, y+h), (0,255,0), 2)
     # show the images
-    return image #np.hstack([image, output])
+    return image, (positions["hor"], positions["ver"]) #np.hstack([image, output])
