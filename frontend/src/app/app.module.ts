@@ -8,6 +8,8 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MotionDetectionComponent } from './motion-detection/motion-detection.component';
 import { ColorDetectionComponent } from './color-detection/color-detection.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { ColorDetectionComponent } from './color-detection/color-detection.compo
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
