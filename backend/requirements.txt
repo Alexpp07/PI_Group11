@@ -7,3 +7,5 @@ io
 os
 flask
 flask_restful
+flask_cors
+pygame
