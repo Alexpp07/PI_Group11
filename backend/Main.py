@@ -1,3 +1,6 @@
+import os
+from math import ceil
+
 import cv2
 from os.path import exists
 from MovementDetection import MovementDetection
@@ -28,8 +31,9 @@ def image():
     
 def play_sound(name):
     clock = pygame.time.Clock()
+    pygame.mixer.init()
     pygame.mixer.music.load("./MIDI_files/" + name + ".midi")
-    pygame.mixer.music.play()
+    pygame.mixer.music.play(0)
     while pygame.mixer.music.get_busy():
         clock.tick(30) # check if playback has finished
     
@@ -85,16 +89,17 @@ def prepareResult(frame, grid_size, coords):
         y = int(coords[1])
         frame = cv2.circle(frame, (x, y), radius=5, color=(255, 0, 0), thickness=-1)
         
-        Xs = ceil(squareX/dx) + 1
-        Ys = ceil(squareY/dy) + 1
+        Xs = round(squareX/dx)
+        Ys = round(squareY/dy)
         
-        square = Ys * 4 + Xs
+        square = Ys * column + Xs
         global squares
-        filename = squares[str(square)]
-        
-        if filename != None and square_threads[str(square)] == None:
-            
-            square_threads[str(square)] = threading.Thread(target=play_sound, args=(filename)).start()
+
+        if str(square) in squares.keys():
+            filename = squares[str(square)]
+
+            if filename != None and str(square) not in square_threads.keys() : #and square_threads[str(square)] == None
+                square_threads[str(square)] = threading.Thread(target=play_sound(filename)).start()
         
     with open("file.jpg", "wb") as dest:
         jpg = cv2.imencode(".jpg", frame)[1]
@@ -108,16 +113,17 @@ def reload_squares():
     for i in range(16):
         midi = f.readline().strip()
         if midi != "":
-            squares[str(i+1)] = f.readline().strip()
+            squares[str(i+1)] = midi
     
 def save_squares():
     global squares
     f = open("save.txt","w")
     for i in range(16):
-        if squares[str(i+1)] != None:
+        if str(i+1) in squares.keys() and squares[str(i+1)] != None:
             f.write(squares[str(i+1)] + "\n")
         else:
             f.write("\n")
+    f.close()
             
 class Color_Detection(Resource):
 
@@ -154,11 +160,13 @@ class Eye_Tracking(Resource):
         
 class Receive_File(Resource):
     def post(self):
-        args = request.args
+        args = request.form
         midifile = args["file"]
         name = args["name"]
-        midifile = bin(base64.b64decode(midifile))
-        writeout = open("./" + name + ".midi", "wb")
+        midifile = midifile[2:len(midifile)-1]
+        midifile = bytes(midifile, 'utf-8')
+        midifile = base64.b64decode(midifile)
+        writeout = open("./MIDI_files/" + name + ".midi", "wb")
         writeout.write(midifile)
         return '{}', 200
         
@@ -170,8 +178,8 @@ class List_Files(Resource):
         
 class Associate_File(Resource):
     def post(self):
-        args = request.args
-        rect = args["rectangle"]
+        args = request.form
+        rect = str(args["rectangle"])
         name = args["sound"]
         squares[rect] = name
         save_squares()
@@ -191,7 +199,6 @@ if __name__ == "__main__":
     
     squares = {}
     reload_squares()
-    
     square_threads = {}
     
     app.run(debug=False)
