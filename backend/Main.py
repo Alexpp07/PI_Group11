@@ -6,7 +6,7 @@ from os.path import exists
 from MovementDetection import MovementDetection
 from ColorDetection import ColorDetection
 from eye_tracking import EyeTracking
-
+from gaze_tracking import GazeTracking
 import numpy as np
 import io
 import base64
@@ -16,7 +16,7 @@ import pygame
 from flask import Flask, request, Response
 from flask_restful import Api, Resource
 from flask_cors import CORS
-
+import time
 from waitress import serve
 '''
 app = Flask(__name__)
@@ -67,14 +67,13 @@ def prepareResult(frame, grid_size, coords):
     for y in np.linspace(start=dy, stop=h-dy, num=row-1):
         y = int(round(y))
         cv2.line(frame, (0, y),(w,y), color=(0,0,0), thickness=1)
-    print("before if")
     if coords[0] != None and coords[1] != None:
         temp_copy = frame.copy()
         squareX = 0
         squareY = 0
         stopped = False
         #figure out which square should be highlighted
-        print("before while")
+
         while not stopped:
             if not squareX <= coords[0] < squareX + dx:
                 squareX += dx
@@ -84,10 +83,7 @@ def prepareResult(frame, grid_size, coords):
             if not squareY <= coords[1] < squareY + dy:
                 squareY += dy
                 stopped = False
-            print(stopped)
-        print("before rec")
         temp_copy = cv2.rectangle(temp_copy, (int(squareX), int(squareY)), (int(squareX + dx), int(squareY + dy)), (100, 100,100), -1)
-        print("before weight")
         cv2.addWeighted(frame, 0.5, temp_copy, 0.5, 0, frame)
         
         x = int(coords[0])
@@ -99,14 +95,11 @@ def prepareResult(frame, grid_size, coords):
         
         square = Ys * column + Xs
         global squares
-        print(9)
         if str(square) in squares.keys():
             filename = squares[str(square)]
 
             if filename != None and str(square) not in square_threads.keys() : #and square_threads[str(square)] == None
-                print(10)
                 square_threads[str(square)] = threading.Thread(target=play_sound(filename)).start()
-    print(11)
         
     with open("file.jpg", "wb") as dest:
         jpg = cv2.imencode(".jpg", frame)[1]
@@ -158,13 +151,12 @@ class Movement_Detection(Resource):
 
 class Eye_Tracking(Resource):
     def get(self):
+        global gaze
         args = request.args
         rect = int(args["rectangles"])
         img = image()
-        frame, coords = EyeTracking(img)
-        print(7)
+        frame, coords = EyeTracking(img,gaze)
         result = prepareResult(frame, rect, coords)
-        print(8)
         return result
         
 class Receive_File(Resource):
@@ -200,6 +192,10 @@ def create_app():
     global imgB
     global squares
     global square_threads
+    global gaze
+
+    gaze = GazeTracking()
+
     vid = cv2.VideoCapture(0)
     ret, imgA = vid.read()
     ret, imgB = vid.read()
