@@ -5,7 +5,7 @@ import time
 BASE = "http://127.0.0.1:8080/"
 
 
-
+'''
 start = time.time()
 response = requests.get(BASE + "color_detection", {"colorR":255,"colorG":255,"colorB":255,"threshold":25, "rectangles":16})
 stop = time.time()
@@ -18,7 +18,7 @@ response = requests.get(BASE + "movement_detection", {"rectangles":16})
 stop2 = time.time()
 #print(response.json())
 print("Movement:" + str(stop2-start2))
-
+'''
 time.sleep(0.5)
 start3 = time.time()
 response = requests.get(BASE + "eye_tracking", {"rectangles":8})

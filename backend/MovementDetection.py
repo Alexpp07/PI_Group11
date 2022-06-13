@@ -32,7 +32,7 @@ def MovementDetection(imageA, imageB):
     cnts = imutils.grab_contours(cnts)
 
     positions = {}
-    maxArea = 6000
+    maxArea = 2000
     for c in cnts:
         if cv2.contourArea(c) > maxArea:
             (x, y, w, h) = cv2.boundingRect(c)
