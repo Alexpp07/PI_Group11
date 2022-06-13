@@ -1,21 +1,31 @@
-<div class="main-container">
-    <div class="row d-md-flex">
-      <div class="col">
-        <div class="classWithPad">
-          <img src={{imageUrl}} width="1280" height="768"/>
-        </div>
-      </div>
-      <div class="col">
-        <div class="classWithPad">
-          <label for="pixels">Number of rectangles:</label><br>
-          <select name="pixels" id="#">
-            <option selected="selected" value="one">4</option>
-            <option value="two">8</option>
-            <option value="three">12</option>
-            <option value="four">16</option>
-          </select>
-        </div>
-    </div>
-    </div>
-  </div>
-  
+<mat-grid-list cols="3" rows="8" rowHeight="105px">
+  <mat-grid-tile colspan="2" rowspan="8">
+    <img src={{imageUrl}} width="1280" height="768"/>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Number of rectangles:</mat-label>
+      <mat-select [(value)]="rectangles">
+        <mat-option value="4">4</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="12">12</mat-option>
+        <mat-option value="16">16</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    Select a rectangle to attach a sound:
+  </mat-grid-tile> 
+    <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-select [(value)]="setRect">
+        <mat-option *ngFor="let number of numberArray" [value]="number">
+          {{number}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-button (click)="attachSound()" type="button">Set</button>
+  </mat-grid-tile>
+</mat-grid-list>

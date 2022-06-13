@@ -13,13 +13,25 @@ export class GazeTrackingComponent implements OnInit {
   isImageSaved: boolean = false;
   imageUrl: string = "";
   mySubscription: Subscription
+  rectangles = "4";
+  link = "";
   constructor(private http: HttpClient) {
-    this.mySubscription= interval(1).subscribe((x =>{
-      this.ngOnInit();
-  }));
+    this.mySubscription= interval(80).subscribe((x =>{
+      this.getVideoFeed();
+    }));
   }
+
   ngOnInit() {
-    this.http.get<any>('http://127.0.0.1:5000/eye_tracking?rectangles=4').subscribe(data => {
+    this.getVideoFeed();
+  }
+  
+  ngOnDestroy() {
+    this.mySubscription.unsubscribe();
+  }
+
+  getVideoFeed() {
+    this.link = 'http://127.0.0.1:5000/eye_tracking?rectangles='.concat(this.rectangles);
+    this.http.get<any>(this.link).subscribe(data => {
       let imageBase64String = data.data;
       imageBase64String = imageBase64String.slice(2);
       imageBase64String = imageBase64String.slice(0, -1);

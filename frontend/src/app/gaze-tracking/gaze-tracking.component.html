@@ -1,14 +1,16 @@
-<div class="main-container">
-  <div class="row d-md-flex">
-    <div class="col">
-      <div class="classWithPad">
-        <img src={{imageUrl}} width="1280" height="768"/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="classWithPad">
-        <!-- space for buttons etc-->
-      </div>
-  </div>
-  </div>
-</div>
+<mat-grid-list cols="3" rows="8" rowHeight="105px">
+  <mat-grid-tile colspan="2" rowspan="8">
+    <img src={{imageUrl}} width="1280" height="768"/>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Number of rectangles:</mat-label>
+      <mat-select [(value)]="rectangles">
+        <mat-option value="4">4</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="12">12</mat-option>
+        <mat-option value="16">16</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>

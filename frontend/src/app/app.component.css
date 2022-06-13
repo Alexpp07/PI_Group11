@@ -14,4 +14,15 @@
 }
 .footer {
     background-color: rgb(230, 237, 247);
+    position: fixed;
+    bottom: 0;
 }
+.mat-toolbar{
+    background-color: cornflowerblue;
+    color: white;
+  }
+.mat-button{
+     color: white;
+  }
+
+  

@@ -7,8 +7,8 @@ import cv2
 
 from gaze_tracking import GazeTracking
 
-def EyeTracking(frame):
-    gaze = GazeTracking()
+def EyeTracking(frame,gaze):
+    #gaze = GazeTracking()
 
     minV = 0.4
     minH = 0.4
@@ -17,10 +17,8 @@ def EyeTracking(frame):
 
     # We send this frame to GazeTracking to analyze it
     gaze.refresh(frame)
-
     verticalR = gaze.vertical_ratio()
     horizontalR = gaze.horizontal_ratio()
-
     if verticalR and horizontalR:
         if minV > verticalR:
             minV = verticalR
@@ -30,10 +28,8 @@ def EyeTracking(frame):
             minH = horizontalR
         if maxH < horizontalR:
             maxH = horizontalR
-
         verticalR = (verticalR - minV) / (maxV - minV)
         horizontalR = (horizontalR - minH) / (maxH - minH)
-
         hor = frame.shape[1] * horizontalR
         ver = frame.shape[0] * verticalR
         return frame, (hor, ver)
