@@ -46,7 +46,7 @@ export class MotionDetectionComponent implements OnInit {
     attachSound() {
       const headers = { "Content-Type": "application/json" };
       const body = {"rectangle": 3, "sound": "teddybear"}
-      this.link = "http://127.0.0.1:5000/square?rectangle=3&sound=teddybear"
+      this.link = "http://127.0.0.1:5000/square"
       this.http.post<any>(this.link, body, { headers }).subscribe(data => {
         console.log(data)
       })
