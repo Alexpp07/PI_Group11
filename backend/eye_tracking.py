@@ -17,10 +17,10 @@ def EyeTracking(frame):
 
     # We send this frame to GazeTracking to analyze it
     gaze.refresh(frame)
-
+    print(1)
     verticalR = gaze.vertical_ratio()
     horizontalR = gaze.horizontal_ratio()
-
+    print(2)
     if verticalR and horizontalR:
         if minV > verticalR:
             minV = verticalR
@@ -30,13 +30,15 @@ def EyeTracking(frame):
             minH = horizontalR
         if maxH < horizontalR:
             maxH = horizontalR
-
+        print(3)
         verticalR = (verticalR - minV) / (maxV - minV)
         horizontalR = (horizontalR - minH) / (maxH - minH)
-
+        print(4)
         hor = frame.shape[1] * horizontalR
         ver = frame.shape[0] * verticalR
+        print(5)
         return frame, (hor, ver)
+    print("6 - None")
     return frame, (None, None)
 
 

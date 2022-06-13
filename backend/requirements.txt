@@ -9,6 +9,6 @@ flask~=2.1.2
 flask_restful
 flask_cors
 pygame~=2.1.2
-
 requests~=2.27.1
 scikit-image~=0.19.2
+waitress

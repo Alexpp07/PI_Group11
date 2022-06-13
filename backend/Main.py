@@ -17,10 +17,12 @@ from flask import Flask, request, Response
 from flask_restful import Api, Resource
 from flask_cors import CORS
 
+from waitress import serve
+'''
 app = Flask(__name__)
 api = CORS(app)
 api = Api(app)
-
+'''
 def image():
     global imgA
     global imgB
@@ -65,24 +67,27 @@ def prepareResult(frame, grid_size, coords):
     for y in np.linspace(start=dy, stop=h-dy, num=row-1):
         y = int(round(y))
         cv2.line(frame, (0, y),(w,y), color=(0,0,0), thickness=1)
+    print("before if")
     if coords[0] != None and coords[1] != None:
         temp_copy = frame.copy()
         squareX = 0
         squareY = 0
         stopped = False
         #figure out which square should be highlighted
+        print("before while")
         while not stopped:
-            if not squareX < coords[0] < squareX + dx:
+            if not squareX <= coords[0] < squareX + dx:
                 squareX += dx
                 stopped = False
             else:
                 stopped = True
-            if not squareY < coords[1] < squareY + dy:
+            if not squareY <= coords[1] < squareY + dy:
                 squareY += dy
-                stopped = False  
-        
+                stopped = False
+            print(stopped)
+        print("before rec")
         temp_copy = cv2.rectangle(temp_copy, (int(squareX), int(squareY)), (int(squareX + dx), int(squareY + dy)), (100, 100,100), -1)
-        
+        print("before weight")
         cv2.addWeighted(frame, 0.5, temp_copy, 0.5, 0, frame)
         
         x = int(coords[0])
@@ -94,12 +99,14 @@ def prepareResult(frame, grid_size, coords):
         
         square = Ys * column + Xs
         global squares
-
+        print(9)
         if str(square) in squares.keys():
             filename = squares[str(square)]
 
             if filename != None and str(square) not in square_threads.keys() : #and square_threads[str(square)] == None
+                print(10)
                 square_threads[str(square)] = threading.Thread(target=play_sound(filename)).start()
+    print(11)
         
     with open("file.jpg", "wb") as dest:
         jpg = cv2.imencode(".jpg", frame)[1]
@@ -155,7 +162,9 @@ class Eye_Tracking(Resource):
         rect = int(args["rectangles"])
         img = image()
         frame, coords = EyeTracking(img)
+        print(7)
         result = prepareResult(frame, rect, coords)
+        print(8)
         return result
         
 class Receive_File(Resource):
@@ -185,13 +194,37 @@ class Associate_File(Resource):
         save_squares()
         return '{}', 200
 
-api.add_resource(Color_Detection,"/color_detection")
-api.add_resource(Movement_Detection,"/movement_detection")
-api.add_resource(Eye_Tracking,"/eye_tracking")
-api.add_resource(Receive_File, "/file")
-api.add_resource(List_Files, "/list")
-api.add_resource(Associate_File, "/square")
+def create_app():
+    global vid
+    global imgA
+    global imgB
+    global squares
+    global square_threads
+    vid = cv2.VideoCapture(0)
+    ret, imgA = vid.read()
+    ret, imgB = vid.read()
 
+    squares = {}
+    reload_squares()
+    square_threads = {}
+
+    app = Flask(__name__)
+    api = CORS(app)
+    api = Api(app)
+
+    api.add_resource(Color_Detection, "/color_detection")
+    api.add_resource(Movement_Detection, "/movement_detection")
+    api.add_resource(Eye_Tracking, "/eye_tracking")
+    api.add_resource(Receive_File, "/file")
+    api.add_resource(List_Files, "/list")
+    api.add_resource(Associate_File, "/square")
+
+    #app.run(debug=False)
+    serve(app, host='127.0.0.1', port=8080, threads=4)
+    vid.release()
+
+create_app()
+''' 
 if __name__ == "__main__":
     vid = cv2.VideoCapture(0)
     ret,  imgA = vid.read()
@@ -204,3 +237,4 @@ if __name__ == "__main__":
     app.run(debug=False)
 
     vid.release()
+'''
