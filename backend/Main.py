@@ -35,7 +35,7 @@ def image():
 def play_sound(name):
     clock = pygame.time.Clock()
     pygame.mixer.init()
-    pygame.mixer.music.load("./MIDI_files/" + name + ".midi")
+    pygame.mixer.music.load("./MIDI_files/" + name + ".mid")
     pygame.mixer.music.play(0)
     while pygame.mixer.music.get_busy():
         clock.tick(30) # check if playback has finished
@@ -43,7 +43,7 @@ def play_sound(name):
 def prepareResult(frame, grid_size, coords):
     
     global square_threads
-    square_threads = {x:y for (x, y) in square_threads.items() if y.is_alive()}
+    square_threads = {x:y for (x, y) in square_threads.items() if y != None if y.is_alive()}
     row = 0
     column = 0
     if grid_size == 4:
