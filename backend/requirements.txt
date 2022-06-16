@@ -1,14 +1,10 @@
 opencv-python~=4.5.5.64
-scikit-images
+scikit-image
 numpy~=1.22.4
 imutils~=0.5.4
-base64
-io
-os
 flask~=2.1.2
 flask_restful
 flask_cors
 pygame~=2.1.2
 requests~=2.27.1
-scikit-image~=0.19.2
 waitress

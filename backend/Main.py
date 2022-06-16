@@ -153,10 +153,11 @@ class Movement_Detection(Resource):
 class Eye_Tracking(Resource):
     def get(self):
         global gaze
+        global gazeBounds
         args = request.args
         rect = int(args["rectangles"])
         img = image()
-        frame, coords = EyeTracking(img,gaze)
+        frame, coords, gazeBounds = EyeTracking(img,gaze, gazeBounds)
         result = prepareResult(frame, rect, coords)
         return result
         
@@ -194,8 +195,10 @@ def create_app():
     global squares
     global square_threads
     global gaze
+    global gazeBounds
 
     gaze = GazeTracking()
+    gazeBounds = [0.4, 0.4, 0.7, 0.7]
 
     vid = cv2.VideoCapture(0)
     ret, imgA = vid.read()

@@ -2,7 +2,7 @@ import base64
 
 import requests
 import time
-BASE = "http://127.0.0.1:8080/"
+BASE = "http://127.0.0.1:5000/"
 
 
 '''
@@ -13,20 +13,21 @@ stop = time.time()
 print("Color:" + str(stop-start))
 time.sleep(0.5)
 '''
+'''
 start2 = time.time()
 response = requests.get(BASE + "movement_detection", {"rectangles":16})
 stop2 = time.time()
 #print(response.json())
 print("Movement:" + str(stop2-start2))
 '''
-time.sleep(0.5)
-start3 = time.time()
-response = requests.get(BASE + "eye_tracking", {"rectangles":8})
-stop3 = time.time()
-#print(response.json())
-print("Eye:" + str(stop3-start3))
-time.sleep(1)
-'''
+while True:
+    time.sleep(0.5)
+    start3 = time.time()
+    response = requests.get(BASE + "eye_tracking", {"rectangles":8})
+    stop3 = time.time()
+    #print(response.json())
+    print("Eye:" + str(stop3-start3))
+
 
 
 #f = open("teddybear.mid","rb")
