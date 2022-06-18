@@ -32,18 +32,17 @@ def image():
     ret,imgA = vid.read()
     return imgA
     
-def play_sound(name):
-    clock = pygame.time.Clock()
-    pygame.mixer.init()
-    pygame.mixer.music.load("./MIDI_files/" + name + ".mid")
-    pygame.mixer.music.play(0)
-    while pygame.mixer.music.get_busy():
-        clock.tick(30) # check if playback has finished
+#def play_sound(name):
+#    clock = pygame.time.Clock()
+#    pygame.mixer.init()
+#    pygame.mixer.music.load("./MIDI_files/" + name + ".mid")
+#    pygame.mixer.music.play(0)
+#    while pygame.mixer.music.get_busy():
+#        clock.tick(30) # check if playback has finished
     
 def prepareResult(frame, grid_size, coords):
     
     global square_threads
-    square_threads = {x:y for (x, y) in square_threads.items() if y != None if y.is_alive()}
     row = 0
     column = 0
     if grid_size == 4:
@@ -99,8 +98,10 @@ def prepareResult(frame, grid_size, coords):
         if str(square) in squares.keys():
             filename = squares[str(square)]
 
-            if filename != None and str(square) not in square_threads.keys() : #and square_threads[str(square)] == None
-                square_threads[str(square)] = threading.Thread(target=play_sound(filename)).start()
+            if filename != None and square_threads[str(square)].get_busy() == False:
+                sound = pygame.mixer.Sound("./MIDI_files/" + filename + ".mid")
+                print(square)
+                square_threads[str(square)].play(sound)
         
     with open("file.jpg", "wb") as dest:
         jpg = cv2.imencode(".jpg", frame)[1]
@@ -169,7 +170,7 @@ class Receive_File(Resource):
         midifile = midifile[2:len(midifile)-1]
         midifile = bytes(midifile, 'utf-8')
         midifile = base64.b64decode(midifile)
-        writeout = open("./MIDI_files/" + name + ".midi", "wb")
+        writeout = open("./MIDI_files/" + name + ".mid", "wb")
         writeout.write(midifile)
         return '{}', 200
         
@@ -199,6 +200,9 @@ def create_app():
 
     gaze = GazeTracking()
     gazeBounds = [0.4, 0.4, 0.7, 0.7]
+    
+    pygame.mixer.init(size=32)
+    pygame.mixer.set_num_channels(16)
 
     vid = cv2.VideoCapture(0)
     ret, imgA = vid.read()
@@ -206,7 +210,7 @@ def create_app():
 
     squares = {}
     reload_squares()
-    square_threads = {}
+    square_threads = {str(x+1):pygame.mixer.Channel(x) for x in range(16)}
 
     app = Flask(__name__)
     api = CORS(app)
