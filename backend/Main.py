@@ -100,7 +100,6 @@ def prepareResult(frame, grid_size, coords):
 
             if filename != None and square_threads[str(square)].get_busy() == False:
                 sound = pygame.mixer.Sound("./MIDI_files/" + filename + ".mid")
-                print(square)
                 square_threads[str(square)].play(sound)
         
     with open("file.jpg", "wb") as dest:
