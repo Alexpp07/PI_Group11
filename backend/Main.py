@@ -43,6 +43,7 @@ def image():
 def prepareResult(frame, grid_size, coords):
     
     global square_threads
+    global previous_square
     row = 0
     column = 0
     if grid_size == 4:
@@ -95,12 +96,14 @@ def prepareResult(frame, grid_size, coords):
         
         square = Ys * column + Xs
         global squares
-        if str(square) in squares.keys():
+        if square != previous_square and str(square) in squares.keys():
             filename = squares[str(square)]
-
             if filename != None and square_threads[str(square)].get_busy() == False:
                 sound = pygame.mixer.Sound("./MIDI_files/" + filename + ".mid")
                 square_threads[str(square)].play(sound)
+        previous_square = square
+    else:
+        previous_square = 0
         
     with open("file.jpg", "wb") as dest:
         jpg = cv2.imencode(".jpg", frame)[1]
@@ -196,6 +199,9 @@ def create_app():
     global square_threads
     global gaze
     global gazeBounds
+    global previous_square
+    
+    previous_square = 0
 
     gaze = GazeTracking()
     gazeBounds = [0.4, 0.4, 0.7, 0.7]
