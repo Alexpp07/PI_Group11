@@ -40,35 +40,20 @@ def MediaPipeHands(frame):
                 for hand_landmarks in results.multi_hand_landmarks:
                     if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_PIP].y):
                         print("SOUND1")
-                        FluidSynth().play_midi('MIDI_files/g3.mid')
-                        #Synthesize MIDI to audio
-
-                        # Note: the default sound font is in 44100 Hz sample rate
-
-                        fs = FluidSynth()
-                        fs.midi_to_audio('MIDI_files/g3.mid', 'output.wav')
-
-                        # FLAC, a lossless codec, is recommended
-
-                        fs.midi_to_audio('MIDI_files/g3.mid', 'output.flac')
-                        #mixer.Sound("./MIDI_files/g3.mid")
-                        #mixer.music.play()
+                        mixer.Sound.play(mixer.Sound('WAV_files/g3.wav'))
                     else:
                         pass
                         #print("NO")
                         #mixer.music.stop()
                     if (hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_PIP].y):
                         print("SOUND2")
-                        mixer.music.load("MIDI_files/a-3.mid")
-                        mixer.music.play()
+                        mixer.Sound.play(mixer.Sound('WAV_files/a4.wav'))
                     if (hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP].y):
                         print("SOUND3")
-                        mixer.music.load("MIDI_files/c4.mid")
-                        mixer.music.play()
+                        mixer.Sound.play(mixer.Sound('WAV_files/b4.wav'))
                     if (hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_PIP].y):
                         print("SOUND4")
-                        mixer.music.load("MIDI_files/b5.mid")
-                        mixer.music.play()
+                        mixer.Sound.play(mixer.Sound('WAV_files/c4.wav'))
                 """for hand_landmarks in results.multi_hand_landmarks:
                     print('hand_landmarks:', hand_landmarks)
                     print(
