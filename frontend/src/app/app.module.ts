@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { GazeTrackingComponent } from './gaze-tracking/gaze-tracking.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MotionDetectionComponent } from './motion-detection/motion-detection.component';
+import { MediaPipeHandsComponent } from './mediapipe-hands/mediapipe-hands.component';
 import { ColorDetectionComponent } from './color-detection/color-detection.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
@@ -20,7 +21,8 @@ import { ColorPickerModule } from '@iplab/ngx-color-picker';
     AppComponent,
     GazeTrackingComponent,
     MotionDetectionComponent,
-    ColorDetectionComponent
+    ColorDetectionComponent,
+    MediaPipeHandsComponent
   ],
   imports: [
     WebcamModule,

@@ -1,0 +1,24 @@
+<mat-grid-list cols="3" rows="8" rowHeight="105px">
+  <mat-grid-tile colspan="2" rowspan="8">
+    <img src={{imageUrl}} width="1280" height="768"/>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Number of rectangles:</mat-label>
+      <mat-select [(value)]="rectangles">
+        <mat-option value="4">4</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="12">12</mat-option>
+        <mat-option value="16">16</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <a (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording"> Start Recording Audio </a>
+    <a (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording Audio </a>
+    <div class="clearfix"></div>
+    <audio controls="" *ngIf="url">
+        <source [src]="sanitize(url)" type="audio/wav">
+    </audio>
+  </mat-grid-tile>
+</mat-grid-list>

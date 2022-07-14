@@ -4,11 +4,13 @@ import { AppComponent } from './app.component';
 import { GazeTrackingComponent } from './gaze-tracking/gaze-tracking.component';
 import { MotionDetectionComponent } from './motion-detection/motion-detection.component';
 import { ColorDetectionComponent } from './color-detection/color-detection.component';
+import { MediaPipeHandsComponent } from './mediapipe-hands/mediapipe-hands.component';
 
 const routes: Routes = [
   { path: 'gaze-tracking', component: GazeTrackingComponent },
   { path: 'motion-detection', component: MotionDetectionComponent },
   { path: 'color-detection', component: ColorDetectionComponent },
+  { path: 'mediapipe_hands', component: MediaPipeHandsComponent },
 ];
 
 @NgModule({

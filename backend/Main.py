@@ -1,3 +1,4 @@
+from msilib.schema import Media
 import os
 from math import ceil
 
@@ -7,12 +8,18 @@ from MovementDetection import MovementDetection
 from ColorDetection import ColorDetection
 from eye_tracking import EyeTracking
 from gaze_tracking import GazeTracking
+from MediaPipeHands import MediaPipeHands
 import numpy as np
 import io
 import base64
 import threading
 import pygame
 import json
+from time import sleep
+import mediapipe as mp
+import cv2
+from playsound import playsound
+from pygame import mixer
 
 from flask import Flask, request, Response
 from flask_restful import Api, Resource
@@ -93,6 +100,7 @@ def prepareResult(frame, grid_size, coords):
         
         Xs = round(squareX/dx)
         Ys = round(squareY/dy)
+
         
         square = Ys * column + Xs
         global squares
@@ -191,6 +199,17 @@ class Associate_File(Resource):
         save_squares()
         return '{}', 200
 
+class MediaPipe_Hands(Resource):
+    def get(self):
+        global gaze
+        global gazeBounds
+        args = request.args
+        rect = int(args["rectangles"])
+        img = image()
+        frame = MediaPipeHands(img)
+        result = prepareResult(frame, rect, [0,0])
+        return result
+
 def create_app():
     global vid
     global imgA
@@ -224,6 +243,7 @@ def create_app():
     api.add_resource(Color_Detection, "/color_detection")
     api.add_resource(Movement_Detection, "/movement_detection")
     api.add_resource(Eye_Tracking, "/eye_tracking")
+    api.add_resource(MediaPipe_Hands, "/mediapipe_hands")
     api.add_resource(Receive_File, "/file")
     api.add_resource(List_Files, "/list")
     api.add_resource(Associate_File, "/square")

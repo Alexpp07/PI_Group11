@@ -28,4 +28,12 @@
   <mat-grid-tile>
     <button mat-button (click)="attachSound()" type="button">Set</button>
   </mat-grid-tile>
+  <mat-grid-tile>
+    <a (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording"> Start Recording Audio </a>
+    <a (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording Audio </a>
+    <div class="clearfix"></div>
+    <audio controls="" *ngIf="url">
+        <source [src]="sanitize(url)" type="audio/wav">
+    </audio>
+  </mat-grid-tile>
 </mat-grid-list>
