@@ -36,10 +36,6 @@ app = Flask(__name__)
 api = CORS(app)
 api = Api(app)
 '''
-finger1 = "None"
-finger2 = "None"
-finger3 = "None"
-finger4 = "None"
 
 def image():
     global imgA
@@ -233,43 +229,36 @@ class Associate_File(Resource):
         return '{}', 200
 
 class MediaPipe_Hands(Resource):
+    finger1 = ""
+    finger2 = ""
+    finger3 = ""
+    finger4 = ""
+
+    dic = {"finger1":finger1, "finger2":finger2, "finger3": finger3, "finger4":finger4}
+
     def get(self):
         args = request.args
         rect = int(args["rectangles"])
         img = image()
-        print(">>>> FINGER 1 DO MEDIAPIPE_HANDS: ", fingers.getFinger('finger1'))
-        frame = MediaPipeHands(img, fingers.getFinger('finger1'))
+        frame = MediaPipeHands(img, self.dic["finger1"], self.dic["finger2"], self.dic["finger3"], self.dic["finger4"])
         result = prepareResultMediaPipeHands(frame, [0,0])
         return result
 
-class Index_Finger(Resource):
     def post(self):
-         fingersDict  ={}
          args = json.loads(request.data)
          sound = args["sound"]
-         finger1 = sound
-         fingers.setFinger("finger1", finger1)
-         print(">>>> SETTING: ", finger1)
-         img = image()
-         #fingers = MediaPipeHandsFingers(img, finger1)
-         #index_finger = fingers[0]
-         #print(">>>>> MAIN- Fingers:",index_finger)
-         #fingersDict[index_finger] = sound
-         print(">>>>> DICTIONARY: ", fingersDict)
-         return args
+         s1 = sound[0]
+         s2 = sound[1]
+         s3 = sound[2]
+         s4 = sound[3]
+         self.setFingerSound(s1, s2, s3, s4)
+         return self.finger1
 
-class Fingers():
-    fingers = {}
-
-    def init(self):
-        finger1 = "finger1"
-        fingers[finger1] = "None"
-
-    def setFinger(self,finger,sound):
-        fingers[finger] = sound
-
-    def getFinger(self, finger):
-        return fingers[finger]
+    def setFingerSound(self, s1, s2, s3, s4):
+        self.dic["finger1"] = s1
+        self.dic["finger2"] = s2
+        self.dic["finger3"] = s3
+        self.dic["finger4"] = s4
 
 def create_app():
     global vid
@@ -280,8 +269,6 @@ def create_app():
     global gaze
     global gazeBounds
     global previous_square
-    global fingers
-    fingers = Fingers()
     
     previous_square = 0
 
@@ -310,7 +297,7 @@ def create_app():
     api.add_resource(Receive_File, "/file")
     api.add_resource(List_Files, "/list")
     api.add_resource(Associate_File, "/square")
-    api.add_resource(Index_Finger, "/index_finger")
+    #api.add_resource(Index_Finger, "/index_finger")
 
     #app.run(debug=False)
     serve(app, host='127.0.0.1', port=5000, threads=4)

@@ -14,7 +14,7 @@ from math import hypot
 from flask import Flask, request, Response
 import json
 
-def MediaPipeHands(frame, sound):
+def MediaPipeHands(frame, s1, s2, s3, s4):
 
     mp_drawing = mp.solutions.drawing_utils
     mp_holistic = mp.solutions.holistic
@@ -61,17 +61,18 @@ def MediaPipeHands(frame, sound):
                     if label == 'Left':
                         for hand_landmarks in results.multi_hand_landmarks:
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_PIP].y):
-                                if (sound == "None"):
-                                    print(">>>>NOT PLAYING, FODA-SE: ") 
-                                else: 
-                                    print(">>>>PLAYING: ", sound) 
-                                    mixer.Sound.play(mixer.Sound(sound))
+                                if (s1 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s1))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/a4.wav'))
+                                if (s2 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s2))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/b4.wav'))
+                                if (s3 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s3))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/c4.wav'))
+                                if (s4 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s4))
+                                  
                     if label == 'Right':
                         for hand_landmarks in results.multi_hand_landmarks:
                             x1, y1 = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x, hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y

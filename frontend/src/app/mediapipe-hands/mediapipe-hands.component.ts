@@ -17,8 +17,11 @@ export class MediaPipeHandsComponent implements OnInit {
   mySubscription: Subscription
   rectangles = "4";
   link = "";
-  setSong = " ";
-  songs = ["WAV_files/a4.wav", "WAV_files/b4.wav", "WAV_files/c4.wav", "WAV_files/g3.wav"]
+  setSong = "";
+  setSong2 = "";
+  setSong3 = "";
+  setSong4 = "";
+  songs = ["a4.wav", "b4.wav", "c4.wav", "g3.wav", ""]
   
   constructor(private http: HttpClient, private domSanitizer: DomSanitizer) {
     this.mySubscription= interval(80).subscribe((x =>{
@@ -48,10 +51,9 @@ export class MediaPipeHandsComponent implements OnInit {
 
   attachSound() {
     const headers = { "Content-Type": "audio/x-wav" };
-    const body = {"sound": this.setSong}
-    console.log(this.setSong)
-    this.link = "http://127.0.0.1:5000/index_finger"
-    console.log(this.link)
+    const body = {"sound": [this.setSong, this.setSong2, this.setSong3, this.setSong4] }
+    console.log([this.setSong, this.setSong2, this.setSong3, this.setSong4])
+    this.link = "http://127.0.0.1:5000/mediapipe_hands"
     this.http.post<any>(this.link, body, { headers }).subscribe(data => {
       console.log(data)
     })

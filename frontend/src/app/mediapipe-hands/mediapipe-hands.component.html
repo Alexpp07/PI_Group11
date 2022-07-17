@@ -16,7 +16,38 @@
   </mat-grid-tile> 
     <mat-grid-tile>
     <mat-form-field appearance="fill">
+      <mat-label>Index Finger</mat-label>
       <mat-select [(value)]="setSong">
+        <mat-option *ngFor="let name of songs" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Middle Finger</mat-label>
+      <mat-select [(value)]="setSong2">
+        <mat-option *ngFor="let name of songs" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Ring Finger</mat-label>
+      <mat-select [(value)]="setSong3">
+        <mat-option *ngFor="let name of songs" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Pinky</mat-label>
+      <mat-select [(value)]="setSong4">
         <mat-option *ngFor="let name of songs" [value]="name">
           {{name}}
         </mat-option>
