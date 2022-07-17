@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ColorPickerModule } from '@iplab/ngx-color-picker';
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ColorPickerModule } from '@iplab/ngx-color-picker';
     MatToolbarModule,
     MatButtonModule,
     MatGridListModule,
-    ColorPickerModule
+    ColorPickerModule,
+    AngularFileUploaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

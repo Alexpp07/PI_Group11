@@ -1,4 +1,5 @@
 from msilib.schema import Media
+from operator import index
 import os
 from math import ceil
 
@@ -6,6 +7,7 @@ import cv2
 from os.path import exists
 from MovementDetection import MovementDetection
 from ColorDetection import ColorDetection
+from MediaPipeHands import MediaPipeHandsFingers
 from eye_tracking import EyeTracking
 from gaze_tracking import GazeTracking
 from MediaPipeHands import MediaPipeHands
@@ -26,11 +28,19 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 import time
 from waitress import serve
+from MediaPipeHands import MediaPipeHands
+
+
 '''
 app = Flask(__name__)
 api = CORS(app)
 api = Api(app)
 '''
+finger1 = "None"
+finger2 = "None"
+finger3 = "None"
+finger4 = "None"
+
 def image():
     global imgA
     global imgB
@@ -118,6 +128,29 @@ def prepareResult(frame, grid_size, coords):
         dest.write(jpg)
     image = open("file.jpg", "rb")
     return {"data": str(base64.b64encode(image.read()))}
+
+def prepareResultMediaPipeHands(frame, coords):
+    
+    global square_threads
+    global previous_square
+
+    if coords[0] != None and coords[1] != None:
+        temp_copy = frame.copy()
+        squareX = 0
+        squareY = 0
+        stopped = False
+        #figure out which square should be highlighted
+        
+        x = int(coords[0])
+        y = int(coords[1])
+        frame = cv2.circle(frame, (x, y), radius=5, color=(255, 0, 0), thickness=-1)
+        
+        
+    with open("file.jpg", "wb") as dest:
+        jpg = cv2.imencode(".jpg", frame)[1]
+        dest.write(jpg)
+    image = open("file.jpg", "rb")
+    return {"data": str(base64.b64encode(image.read()))}
         
 def reload_squares():
     global squares
@@ -136,7 +169,7 @@ def save_squares():
         else:
             f.write("\n")
     f.close()
-            
+
 class Color_Detection(Resource):
 
     def get(self):
@@ -201,14 +234,42 @@ class Associate_File(Resource):
 
 class MediaPipe_Hands(Resource):
     def get(self):
-        global gaze
-        global gazeBounds
         args = request.args
         rect = int(args["rectangles"])
         img = image()
-        frame = MediaPipeHands(img)
-        result = prepareResult(frame, rect, [0,0])
+        print(">>>> FINGER 1 DO MEDIAPIPE_HANDS: ", fingers.getFinger('finger1'))
+        frame = MediaPipeHands(img, fingers.getFinger('finger1'))
+        result = prepareResultMediaPipeHands(frame, [0,0])
         return result
+
+class Index_Finger(Resource):
+    def post(self):
+         fingersDict  ={}
+         args = json.loads(request.data)
+         sound = args["sound"]
+         finger1 = sound
+         fingers.setFinger("finger1", finger1)
+         print(">>>> SETTING: ", finger1)
+         img = image()
+         #fingers = MediaPipeHandsFingers(img, finger1)
+         #index_finger = fingers[0]
+         #print(">>>>> MAIN- Fingers:",index_finger)
+         #fingersDict[index_finger] = sound
+         print(">>>>> DICTIONARY: ", fingersDict)
+         return args
+
+class Fingers():
+    fingers = {}
+
+    def init(self):
+        finger1 = "finger1"
+        fingers[finger1] = "None"
+
+    def setFinger(self,finger,sound):
+        fingers[finger] = sound
+
+    def getFinger(self, finger):
+        return fingers[finger]
 
 def create_app():
     global vid
@@ -219,6 +280,8 @@ def create_app():
     global gaze
     global gazeBounds
     global previous_square
+    global fingers
+    fingers = Fingers()
     
     previous_square = 0
 
@@ -247,6 +310,7 @@ def create_app():
     api.add_resource(Receive_File, "/file")
     api.add_resource(List_Files, "/list")
     api.add_resource(Associate_File, "/square")
+    api.add_resource(Index_Finger, "/index_finger")
 
     #app.run(debug=False)
     serve(app, host='127.0.0.1', port=5000, threads=4)

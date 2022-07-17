@@ -1,17 +1,7 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <mat-grid-list cols="3" rows="8" rowHeight="105px">
   <mat-grid-tile colspan="2" rowspan="8">
     <img src={{imageUrl}} width="1280" height="768"/>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-form-field appearance="fill">
-      <mat-label>Number of rectangles:</mat-label>
-      <mat-select [(value)]="rectangles">
-        <mat-option value="4">4</mat-option>
-        <mat-option value="8">8</mat-option>
-        <mat-option value="12">12</mat-option>
-        <mat-option value="16">16</mat-option>
-      </mat-select>
-    </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>
     <a (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording"> Start Recording Audio </a>
@@ -20,5 +10,20 @@
     <audio controls="" *ngIf="url">
         <source [src]="sanitize(url)" type="audio/wav">
     </audio>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    Select a Finger to attach sound
+  </mat-grid-tile> 
+    <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-select [(value)]="setSong">
+        <mat-option *ngFor="let name of songs" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-button (click)="attachSound()" type="button">Set</button>
   </mat-grid-tile>
 </mat-grid-list>

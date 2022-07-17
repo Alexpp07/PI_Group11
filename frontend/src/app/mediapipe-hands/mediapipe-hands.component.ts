@@ -4,6 +4,7 @@ import { interval, Subscription} from 'rxjs';
 import {MatButtonModule} from '@angular/material/button';
 import RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
 @Component({
   selector: 'app-motion-detection',
@@ -16,6 +17,9 @@ export class MediaPipeHandsComponent implements OnInit {
   mySubscription: Subscription
   rectangles = "4";
   link = "";
+  setSong = " ";
+  songs = ["WAV_files/a4.wav", "WAV_files/b4.wav", "WAV_files/c4.wav", "WAV_files/g3.wav"]
+  
   constructor(private http: HttpClient, private domSanitizer: DomSanitizer) {
     this.mySubscription= interval(80).subscribe((x =>{
       this.getVideoFeed();
@@ -32,12 +36,25 @@ export class MediaPipeHandsComponent implements OnInit {
 
   getVideoFeed() {
     this.link = 'http://127.0.0.1:5000/mediapipe_hands?rectangles='.concat(this.rectangles);
+    const body = {"sound": this.setSong}
     this.http.get<any>(this.link).subscribe(data => {
       let imageBase64String = data.data;
       imageBase64String = imageBase64String.slice(2);
       imageBase64String = imageBase64String.slice(0, -1);
       this.imageUrl = 'data:image/png;base64,' + imageBase64String;
-    console.log(this.imageUrl)})
+    //console.log(this.imageUrl)
+  })
+  }
+
+  attachSound() {
+    const headers = { "Content-Type": "audio/x-wav" };
+    const body = {"sound": this.setSong}
+    console.log(this.setSong)
+    this.link = "http://127.0.0.1:5000/index_finger"
+    console.log(this.link)
+    this.http.post<any>(this.link, body, { headers }).subscribe(data => {
+      console.log(data)
+    })
   }
 
     record: any;
