@@ -1,0 +1,8 @@
+.mat-grid-list {
+    background-color: rgb(230, 237, 247);
+    justify-content: flex-start !important ;
+    align-items: right !important;
+}
+.mat-grid-tile {
+    padding: 50px;
+}

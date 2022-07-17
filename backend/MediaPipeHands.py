@@ -94,7 +94,7 @@ def MediaPipeHands(frame, s1, s2, s3, s4):
                                             )
             return frame
 
-def MediaPipeHandsFingers(frame):
+def MediaPipe2Hands(frame, s1, s2, s3, s4, s5, s6, s7, s8):
 
     mp_drawing = mp.solutions.drawing_utils
     mp_holistic = mp.solutions.holistic
@@ -137,31 +137,36 @@ def MediaPipeHandsFingers(frame):
 
                 for i in results.multi_handedness:
                     label = MessageToDict(i)['classification'][0]['label']
-                    index_finger = mp_hands.HandLandmark.INDEX_FINGER_TIP
-                    fingers.append(index_finger)
-                    print(">>>CHEGUEI AQUI")
 
                     if label == 'Left':
                         for hand_landmarks in results.multi_hand_landmarks:
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/g3.wav'))
+                                if (s1 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s1))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/a4.wav'))
+                                if (s2 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s2))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/b4.wav'))
+                                if (s3 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s3))
                             if (hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_PIP].y):
-                                mixer.Sound.play(mixer.Sound('WAV_files/c4.wav'))
+                                if (s4 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s4))
+                                  
                     if label == 'Right':
                         for hand_landmarks in results.multi_hand_landmarks:
-                            x1, y1 = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x, hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y
-                            x2, y2 = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP].x, hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP].y
-                            length = hypot(x2 - x1, y2 - y1)
-                            vol = (length*3*65.25)-65.25
-                            if vol > 0:
-                                vol = 0
-                            # volumeValue = np.interp(length, [50, 250], [-65.25, 0.0]) #coverting length to proportionate to volume range
-                            print(vol)
-                            volume.SetMasterVolumeLevel(vol, None)
+                            if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_PIP].y):
+                                if (s5 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s5))
+                            if (hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_PIP].y):
+                                if (s6 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s6))
+                            if (hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP].y):
+                                if (s7 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s7))
+                            if (hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_PIP].y):
+                                if (s8 != ""):
+                                    mixer.Sound.play(mixer.Sound("WAV_files/" + s8))
                 
             # Rendering results
             if results.multi_hand_landmarks:
@@ -170,5 +175,4 @@ def MediaPipeHandsFingers(frame):
                                             mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
                                             mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2, circle_radius=2),
                                             )
-            print(">>>>> MEDIAPIPEHANDS - FINGERS:", fingers)
-            return fingers
+            return frame

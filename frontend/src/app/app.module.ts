@@ -7,6 +7,7 @@ import { GazeTrackingComponent } from './gaze-tracking/gaze-tracking.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MotionDetectionComponent } from './motion-detection/motion-detection.component';
 import { MediaPipeHandsComponent } from './mediapipe-hands/mediapipe-hands.component';
+import { MediaPipe2HandsComponent } from './mediapipe-2hands/mediapipe-2hands.component';
 import { ColorDetectionComponent } from './color-detection/color-detection.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
@@ -23,7 +24,8 @@ import { AngularFileUploaderModule } from "angular-file-uploader";
     GazeTrackingComponent,
     MotionDetectionComponent,
     ColorDetectionComponent,
-    MediaPipeHandsComponent
+    MediaPipeHandsComponent,
+    MediaPipe2HandsComponent
   ],
   imports: [
     WebcamModule,

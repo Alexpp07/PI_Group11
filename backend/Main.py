@@ -7,7 +7,7 @@ import cv2
 from os.path import exists
 from MovementDetection import MovementDetection
 from ColorDetection import ColorDetection
-from MediaPipeHands import MediaPipeHandsFingers
+from MediaPipeHands import MediaPipe2Hands
 from eye_tracking import EyeTracking
 from gaze_tracking import GazeTracking
 from MediaPipeHands import MediaPipeHands
@@ -260,6 +260,50 @@ class MediaPipe_Hands(Resource):
         self.dic["finger3"] = s3
         self.dic["finger4"] = s4
 
+class MediaPipe_2Hands(Resource):
+    finger1 = ""
+    finger2 = ""
+    finger3 = ""
+    finger4 = ""
+    finger5 = ""
+    finger6 = ""
+    finger7 = ""
+    finger8 = ""
+
+    dic = {"finger1":finger1, "finger2":finger2, "finger3": finger3, "finger4":finger4,"finger5":finger5, "finger6":finger6, "finger7":finger7, "finger8":finger8}
+
+    def get(self):
+        args = request.args
+        rect = int(args["rectangles"])
+        img = image()
+        frame = MediaPipe2Hands(img, self.dic["finger1"], self.dic["finger2"], self.dic["finger3"], self.dic["finger4"],self.dic["finger5"], self.dic["finger6"], self.dic["finger7"], self.dic["finger8"])
+        result = prepareResultMediaPipeHands(frame, [0,0])
+        return result
+
+    def post(self):
+         args = json.loads(request.data)
+         sound = args["sound"]
+         s1 = sound[0]
+         s2 = sound[1]
+         s3 = sound[2]
+         s4 = sound[3]
+         s5 = sound[4]
+         s6 = sound[5]
+         s7 = sound[6]
+         s8 = sound[7]
+         self.setFingerSound(s1, s2, s3, s4, s5, s6, s7, s8)
+         return self.finger1
+
+    def setFingerSound(self, s1, s2, s3, s4, s5, s6, s7, s8):
+        self.dic["finger1"] = s1
+        self.dic["finger2"] = s2
+        self.dic["finger3"] = s3
+        self.dic["finger4"] = s4
+        self.dic["finger5"] = s5
+        self.dic["finger6"] = s6
+        self.dic["finger7"] = s7
+        self.dic["finger8"] = s8
+
 def create_app():
     global vid
     global imgA
@@ -294,10 +338,10 @@ def create_app():
     api.add_resource(Movement_Detection, "/movement_detection")
     api.add_resource(Eye_Tracking, "/eye_tracking")
     api.add_resource(MediaPipe_Hands, "/mediapipe_hands")
+    api.add_resource(MediaPipe_2Hands, "/mediapipe_2hands")
     api.add_resource(Receive_File, "/file")
     api.add_resource(List_Files, "/list")
     api.add_resource(Associate_File, "/square")
-    #api.add_resource(Index_Finger, "/index_finger")
 
     #app.run(debug=False)
     serve(app, host='127.0.0.1', port=5000, threads=4)
