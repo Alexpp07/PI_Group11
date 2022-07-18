@@ -4,5 +4,12 @@
     align-items: right !important;
 }
 .mat-grid-tile {
-    padding: 50px;
+    padding: 5px;
+    width: 30%;
+    margin-bottom: 10px;
 }
+
+.mat-form-field {
+    width: 60%;
+}
+

@@ -25,7 +25,7 @@ export class MediaPipe2HandsComponent implements OnInit {
   setSong6 = "";
   setSong7 = "";
   setSong8 = "";
-  songs = ["a4.wav", "b4.wav", "c4.wav", "g3.wav", ""]
+  songs = ["a4.wav", "b4.wav", "c4.wav", "d5.wav", "e5.wav", "f5.wav","g3.wav", ""]
   
   constructor(private http: HttpClient, private domSanitizer: DomSanitizer) {
     this.mySubscription= interval(80).subscribe((x =>{

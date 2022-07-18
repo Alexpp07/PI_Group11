@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<mat-grid-list cols="3" rows="8" rowHeight="105px">
-  <mat-grid-tile colspan="2" rowspan="8">
+<mat-grid-list cols="8" rows="8" rowHeight="105px" >
+  <mat-grid-tile colspan="6" rowspan="8">
     <img src={{imageUrl}} width="1280" height="768"/>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile colspan="2">
     <a (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording"> Start Recording Audio </a>
     <a (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording Audio </a>
     <div class="clearfix"></div>
@@ -11,13 +11,13 @@
         <source [src]="sanitize(url)" type="audio/wav">
     </audio>
   </mat-grid-tile>
-  <mat-grid-tile>
-    Select a Finger to attach sound to the Left Hand
+  <mat-grid-tile colspan="2">
+    Select a finger to attach sound to the Left Hand
   </mat-grid-tile> 
     <mat-grid-tile>
     <mat-form-field appearance="fill">
       <mat-label>Index Finger</mat-label>
-      <mat-select [(value)]="setSong">
+      <mat-select [(value)]="setSong" >
         <mat-option *ngFor="let name of songs" [value]="name">
           {{name}}
         </mat-option>
@@ -54,7 +54,7 @@
       </mat-select>
     </mat-form-field>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile colspan="2">
     Select a Finger to attach sound to the Right Hand
   </mat-grid-tile> 
     <mat-grid-tile>
@@ -97,7 +97,7 @@
       </mat-select>
     </mat-form-field>
   </mat-grid-tile>
-  <mat-grid-tile>
-    <button mat-button (click)="attachSound()" type="button">Set</button>
+  <mat-grid-tile colspan="2">
+    <button style="width: 70%;" mat-button (click)="attachSound()" type="button">Set</button>
   </mat-grid-tile>
 </mat-grid-list>

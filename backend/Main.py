@@ -237,8 +237,6 @@ class MediaPipe_Hands(Resource):
     dic = {"finger1":finger1, "finger2":finger2, "finger3": finger3, "finger4":finger4}
 
     def get(self):
-        args = request.args
-        rect = int(args["rectangles"])
         img = image()
         frame = MediaPipeHands(img, self.dic["finger1"], self.dic["finger2"], self.dic["finger3"], self.dic["finger4"])
         result = prepareResultMediaPipeHands(frame, [0,0])
@@ -273,8 +271,6 @@ class MediaPipe_2Hands(Resource):
     dic = {"finger1":finger1, "finger2":finger2, "finger3": finger3, "finger4":finger4,"finger5":finger5, "finger6":finger6, "finger7":finger7, "finger8":finger8}
 
     def get(self):
-        args = request.args
-        rect = int(args["rectangles"])
         img = image()
         frame = MediaPipe2Hands(img, self.dic["finger1"], self.dic["finger2"], self.dic["finger3"], self.dic["finger4"],self.dic["finger5"], self.dic["finger6"], self.dic["finger7"], self.dic["finger8"])
         result = prepareResultMediaPipeHands(frame, [0,0])
