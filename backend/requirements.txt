@@ -1,5 +1,5 @@
 opencv-python~=4.5.5.64
-scikit-image
+scikit-image~=0.19.2
 numpy~=1.22.4
 imutils~=0.5.4
 flask~=2.1.2
@@ -7,4 +7,9 @@ flask_restful
 flask_cors
 pygame~=2.1.2
 requests~=2.27.1
-waitress
+waitress~=2.1.2
+mediapipe~=0.8.10.1
+playsound~=1.2.2
+dlib~=19.24.0
+comtypes~=1.1.11
+pycaw~=20220416

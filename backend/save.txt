@@ -1,11 +1,19 @@
-mysound
-mysound
-
-
-mysound
-mysound
-
-
+a3
+a5
+a-4
+b3
+b5
+c4
+c5
+c-3
+c-5
+d4
+d5
+e3
+f3
+f5
+f-5
+g4
 
 
 

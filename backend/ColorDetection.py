@@ -14,15 +14,12 @@ boundaries = [
 def ColorDetection(image,r,b,g,threshold):
     # loop over the boundaries
     # create NumPy arrays from the boundaries
-    #r = cv2.getTrackbarPos('R', 'Result')
-    #g = cv2.getTrackbarPos('G', 'Result')
-    #b = cv2.getTrackbarPos('B', 'Result')
     lower = np.array([max(0, r - threshold), max(0, g - threshold), max(0, b - threshold)], dtype = "uint8")
     upper = np.array([min(255, r + threshold), min(255, g + threshold), min(255, b + threshold)], dtype = "uint8")
     # find the colors within the specified boundaries and apply
     # the mask
     mask = cv2.inRange(image, lower, upper)
-    #output = cv2.bitwise_and(image, image, mask = mask)
+
     morph = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5), (2,2)) 
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, morph)
     cnts = cv2.findContours(mask, cv2.RETR_EXTERNAL,
@@ -38,10 +35,4 @@ def ColorDetection(image,r,b,g,threshold):
             positions["hor"] = x + w / 2
             positions["ver"] = y + h / 2
             maxArea=cv2.contourArea(c)
-
-        #cv2.rectangle(image, (x, y), (x+w, y+h), (0,255,0), 2)
-    # show the images
-    #with open("test.jpg", "wb") as dest:
-    #    jpg = cv2.imencode(".jpg", mask)[1]
-    #    dest.write(jpg)
-    return image, (positions["hor"], positions["ver"]) #np.hstack([image, output])
+    return image, (positions["hor"], positions["ver"])
